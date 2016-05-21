@@ -1,0 +1,12 @@
+userId,password,name,ic,payment,address,phone,ItemList:itemNameA:itemNameB:itemNameC,BiddingList:itemNameA:itemNameB,SuccessBidList:itemNameA:itemNameB,bidFrequency
+nunu,cw,chahwei,960910075047,paypal,f212,0123701243,nunu:tupperware,nunu,null,0
+z2,2,ZhongQi,9343,paypal,kk8,2312,null,null,null,0
+z2,2,ZhongQi,9343,paypal,kk8,2312,heaven n earth,null,null,0
+nunu,cw,chahwei,960910075047,paypal,f212,0123701243,nunu:tupperware,nunu:heaven n earth,null,0
+nunu,cw,chahwei,960910075047,paypal,f212,0123701243,nunu:tupperware,nunu:heaven n earth,null,1
+nunu,cw,chahwei,960910075047,paypal,f212,0123701243,nunu:tupperware,nunu:heaven n earth,null,1
+hy,hy,hanyang,123,paypal,kk8,015,null,null,null,0
+hy,hy,hanyang,123,paypal,kk8,015,null,heaven n earth,null,1
+nunu,cw,chahwei,960910075047,paypal,f212,0123701243,nunu:tupperware,nunu:heaven n earth,null,2
+hy,hy,hanyang,123,paypal,kk8,015,null,heaven n earth,null,2
+nunu,cw,chahwei,960910075047,paypal,f212,0123701243,nunu:tupperware,nunu:heaven n earth,null,3
