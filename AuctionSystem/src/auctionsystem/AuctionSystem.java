@@ -234,8 +234,8 @@ public class AuctionSystem {
             switch(choice){
                 case "1":
                     displayProfile();
-                    System.out.println("6. Total income amount: " + sellerTotalIncome());
-                    System.out.println("7. Total pending payment: " + bidderTotalPendingPayment());
+                    System.out.println("6. Total income amount: RM" + sellerTotalIncome());
+                    System.out.println("7. Total pending payment: RM" + bidderTotalPendingPayment());
                     System.out.println("8. Bidder Status: " + bidderStatus(bidder));
                     manageProfile = true;
                     break;
@@ -546,7 +546,7 @@ public class AuctionSystem {
             if(currentDate.after((item.auctionType).startTime) && currentDate.before((item.auctionType).endTime))
                 hold.add(item);
         }
-        System.out.println("====== Seller Ongoing Auction ======");
+        System.out.println("\n====== Seller Ongoing Auction ======");
         if(hold.isEmpty())
             System.out.println("No item.");
         else
@@ -561,7 +561,7 @@ public class AuctionSystem {
             if(currentDate.after((item.auctionType).endTime))
                 hold.add(item);
         }
-        System.out.println("====== Seller Ended Auction ======");
+        System.out.println("\n====== Seller Ended Auction ======");
         if(hold.isEmpty())
             System.out.println("No item.");
         else{
@@ -695,7 +695,7 @@ public class AuctionSystem {
     
     //Ended Auction + Success List
     public void accessBidderEndedList(){
-        System.out.println("====== Ended Auction ======");
+        System.out.println("\n====== Ended Auction ======");
         if(bidderEndedBid.isEmpty() && bidder.successBidList.isEmpty())
             System.out.println("No item.");
         else if(!bidderEndedBid.isEmpty() && bidder.successBidList.isEmpty()){
