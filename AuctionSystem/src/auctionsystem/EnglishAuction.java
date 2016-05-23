@@ -41,7 +41,7 @@ public class EnglishAuction extends Auction {
                                 bidderN.addBidFrequency();
                             }
                             else
-                                System.out.println("You bid does not reach the minimum amount by which the next bid must exceed the current highest bid.");
+                                System.out.println("You bid does not reach the minimum amount by which the next bid must exceed minimum exceed [RM " + minExceed +"]");
                         }
                         else
                             System.out.println("Your bidding price is lower than previous bid. ");
@@ -53,7 +53,7 @@ public class EnglishAuction extends Auction {
                                 bidderN.addBidFrequency();
                             }
                             else
-                                System.out.println("You bid does not reach the minimum amount by which the next bid must exceed the current highest bid.");
+                                System.out.println("You bid does not reach the minimum amount by which the next bid must exceed the current highest bid [RM " + getHighestBid()+ "]");
                         }
                         else
                             System.out.println("Your bidding price is lower than previous bid. ");

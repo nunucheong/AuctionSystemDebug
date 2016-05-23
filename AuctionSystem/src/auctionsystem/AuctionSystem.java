@@ -487,7 +487,7 @@ public class AuctionSystem {
     public void addItem(Date date, Item item){
         int i = 0;
         Pair<Date,Item> hold = itemList.getItem(i);
-        while(hold!= null &&hold.getKey().after(date) && i < itemList.getEntry()){                
+        while(hold!= null &&hold.getKey().before(date) && i < itemList.getEntry()){                
             hold = itemList.getItem(i+1);
             i++;
         }
@@ -1363,7 +1363,6 @@ public class AuctionSystem {
             }
             else{
                 while(i < item.auctionType.bidStack.bidPriceList.size()){
-                    System.out.println("inside writeItem " + item.auctionType.bidStack.bidderList.get(i).name);
                     if(i == item.auctionType.bidStack.bidPriceList.size()-1){
                         input.printf(item.auctionType.bidStack.bidderList.get(i).name+";"+item.auctionType.bidStack.bidPriceList.get(i)+";"+dateToString(item.auctionType.bidStack.bidTimeList.get(i).toString())+",");
                     }else{ 
