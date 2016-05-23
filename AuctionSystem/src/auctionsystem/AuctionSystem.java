@@ -889,7 +889,7 @@ public class AuctionSystem {
         for(int i=0;i<holdPrice.size()&&i<holdBidder.size();i++){
             System.out.print("Calling Price : RM"+holdPrice.get(i));            //is this output method okay?
             System.out.print(" by " + holdBidder.get(i).name);
-            System.out.println(" at " + item.auctionType.bidStack.bidTimeList.get(i));
+            System.out.println(" at " + dateToString(item.auctionType.bidStack.bidTimeList.get(i).toString()));
         }
     }
     
