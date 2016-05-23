@@ -20,11 +20,19 @@ public class BlindAuction extends Auction {
     
     @Override
     public void pushBid(Double bid, Date currentTime, Bidder bidder){
-        if(bidCounter==1){
-            if(currentTime.equals(endTime)){
-                bidStack.push(bid, bidder, currentTime);
-                bidder.addBidFrequency();
+       if(super.bidStack.bidderList.size() !=0)
+            for (int i = 0; i < super.bidStack.bidderList.size(); i++){
+                if(super.bidStack.bidderList.get(i).getName().equals(bidder.getName())){
+                    System.out.println("You can only bid once.");
+                }
+                else{
+                    bidStack.push(bid, bidder, currentTime);
+                    bidder.addBidFrequency();
+                  }
             }
+        else{
+            bidStack.push(bid, bidder, currentTime);
+            bidder.addBidFrequency();
         }
     }
     

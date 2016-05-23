@@ -549,8 +549,10 @@ public class AuctionSystem {
         System.out.println("\n====== Seller Ongoing Auction ======");
         if(hold.isEmpty())
             System.out.println("No item.");
-        else
+        else{
+            System.out.println("Current Time: " + dateformat.format(currentDate));
             displayItemList(hold);
+        }
     }
     
     public void accessSellerEndedItem(){
@@ -566,54 +568,66 @@ public class AuctionSystem {
             System.out.println("No item.");
         else{
             System.out.println("Current Time: " + dateformat.format(currentDate));
-            System.out.println(calcTab("Item Name")+calcTab("Item Price")+calcTab("Item Description")+calcTab("Auction Start Time")+calcTab("Auction End Time")+calcTab("Auction Type")+calcTab("Auction Winner")+calcTab("Winning Price")+calcTab("Total Bid"));
-            for(int i = 0; i<hold.size(); i++){
-                Item item = hold.get(i);
-                    if(item.auctionType.AuctionType.equals("VickeryAuction")){    
-                        if(item.auctionType.bidStack.bidderList.size()<2)
-                            System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(item.auctionType.bidStack.peek().getValue().getName())+calcTab(((VickeryAuction)item.auctionType).getSecondHighestBid()+"")+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
-                        else{
-                            if(((VickeryAuction)item.auctionType).checkTie()){
-                                //logic when there's tie
-                                int tiePosition = ((VickeryAuction)item.auctionType).tieWinnerPosition();
-                                System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(item.auctionType.bidStack.bidderList.get(tiePosition).getName())+calcTab(((VickeryAuction)item.auctionType).getSecondHighestBid()+"")+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
-                            }
-                            else{
-                                //logic when there's no tie
-                                int indexOfHighestPrice = item.auctionType.bidStack.bidPriceList.indexOf(item.auctionType.getHighestBid());
-                                System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(item.auctionType.bidStack.bidderList.get(indexOfHighestPrice).getName())+calcTab(((VickeryAuction)item.auctionType).getSecondHighestBid()+"")+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
-                            }
-                        }
-                    }
-                    if(item.auctionType.AuctionType.equals("BlindAuction")){    
-                        if(item.auctionType.bidStack.bidderList.size()<2)
-                            System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(item.auctionType.bidStack.peek().getValue().getName())+calcTab(((BlindAuction)item.auctionType).getHighestBid()+"")+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
-                        else{
-                            if(((BlindAuction)item.auctionType).checkTie()){
-                                //logic when there's tie
-                                int tiePosition = ((BlindAuction)item.auctionType).tieWinnerPosition();
-                                System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(item.auctionType.bidStack.bidderList.get(tiePosition).getName())+calcTab(((BlindAuction)item.auctionType).getHighestBid()+"")+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
-                            }
-                            else{
-                                //logic when there's no tie
-                                int indexOfHighestPrice = item.auctionType.bidStack.bidPriceList.indexOf(item.auctionType.getHighestBid());
-                                System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(item.auctionType.bidStack.bidderList.get(indexOfHighestPrice).getName())+calcTab(((BlindAuction)item.auctionType).getHighestBid()+"")+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
-                            }
-                        }
-                    }
-                    else
-                        System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType)+calcTab(item.auctionType.bidStack.peek().getValue().getName())+calcTab(item.auctionType.getHighestBid()+"")+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
-            }
+            displayItemList(hold);
         }    
     }
     
     public void displayItemList(ArrayList<Item> list){
         Date currentDate = new Date();
-        System.out.println("Current Time: " + dateformat.format(currentDate));
-        System.out.println(calcTab("Item Name")+calcTab("Item Price")+calcTab("Item Description")+calcTab("Auction Start Time")+calcTab("Auction End Time")+calcTab("Auction Type"));
+        System.out.println(calcTab("Item Name")+calcTab("Item Price")+calcTab("Item Description")+calcTab("Auction Start Time")+calcTab("Auction End Time")+calcTab("Auction Type")+calcTab("Highest Bid")+calcTab("Bidder")+calcTab("Total Bid"));
         for(int i = 0; i<list.size(); i++){
             Item item = list.get(i);
-            System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+""));
+            if(currentDate.before(item.auctionType.endTime)){
+                if(!item.auctionType.bidStack.bidderList.isEmpty()){
+                    if(item.auctionType.AuctionType.equals("BlindAuction") || item.auctionType.AuctionType.equals("VickeryAuction")){
+                    System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab("Anonymous price")+calcTab("Anonymous bidder")+calcTab(item.auctionType.bidStack.bidderList.size()+""));
+                    }
+                    else
+                    System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(item.auctionType.getHighestBid()+"")+calcTab(item.auctionType.bidStack.peek().getValue().getName())+calcTab(item.auctionType.bidStack.bidderList.size()+""));
+                }
+                else
+                    System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab("No highest bid")+calcTab("No bidder")+calcTab(item.auctionType.bidStack.bidderList.size()+""));
+            }
+            else{
+                if(!item.auctionType.bidStack.bidderList.isEmpty()){
+                    if(item.auctionType.AuctionType.equals("VickeryAuction")){    
+                        if(item.auctionType.bidStack.bidderList.size()<2)
+                            System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(((VickeryAuction)item.auctionType).getSecondHighestBid()+"")+calcTab(item.auctionType.bidStack.peek().getValue().getName())+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
+                        else{
+                            if(((VickeryAuction)item.auctionType).checkTie()){
+                                //logic when there's tie
+                                int tiePosition = ((VickeryAuction)item.auctionType).tieWinnerPosition();
+                                System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(((VickeryAuction)item.auctionType).getSecondHighestBid()+"")+calcTab(item.auctionType.bidStack.bidderList.get(tiePosition).getName())+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
+                            }
+                            else{
+                                //logic when there's no tie
+                                int indexOfHighestPrice = item.auctionType.bidStack.bidPriceList.indexOf(item.auctionType.getHighestBid());
+                                System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(((VickeryAuction)item.auctionType).getSecondHighestBid()+"")+calcTab(item.auctionType.bidStack.bidderList.get(indexOfHighestPrice).getName())+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
+                            }
+                        }
+                    }
+                    if(item.auctionType.AuctionType.equals("BlindAuction")){    
+                        if(item.auctionType.bidStack.bidderList.size()<2)
+                            System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(((BlindAuction)item.auctionType).getHighestBid()+"")+calcTab(item.auctionType.bidStack.peek().getValue().getName())+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
+                        else{
+                            if(((BlindAuction)item.auctionType).checkTie()){
+                                //logic when there's tie
+                                int tiePosition = ((BlindAuction)item.auctionType).tieWinnerPosition();
+                                System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(((BlindAuction)item.auctionType).getHighestBid()+"")+calcTab(item.auctionType.bidStack.bidderList.get(tiePosition).getName())+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
+                            }
+                            else{
+                                //logic when there's no tie
+                                int indexOfHighestPrice = item.auctionType.bidStack.bidPriceList.indexOf(item.auctionType.getHighestBid());
+                                System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(((BlindAuction)item.auctionType).getHighestBid()+"")+calcTab(item.auctionType.bidStack.bidderList.get(indexOfHighestPrice).getName())+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
+                            }
+                        }
+                    }
+                    else
+                        System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType)+calcTab(item.auctionType.getHighestBid()+"")+calcTab(item.auctionType.bidStack.peek().getValue().getName())+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
+                }
+                else
+                    System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab("No highest bid")+calcTab("No bidder")+calcTab(item.auctionType.bidStack.bidderList.size()+""));
+            }
         }
     }
     
@@ -700,20 +714,20 @@ public class AuctionSystem {
             System.out.println("No item.");
         else if(!bidderEndedBid.isEmpty() && bidder.successBidList.isEmpty()){
             System.out.println("The items' auction time has ended.");
-            System.out.println(calcTab("Item Name")+calcTab("Item Price")+calcTab("Item Description")+calcTab("Auction Start Time")+calcTab("Auction End Time")+calcTab("Auction Type")+calcTab("Auction Winner")+calcTab("Winning Price")+calcTab("Total Bid"));
+            //System.out.println(calcTab("Item Name")+calcTab("Item Price")+calcTab("Item Description")+calcTab("Auction Start Time")+calcTab("Auction End Time")+calcTab("Auction Type")+calcTab("Auction Winner")+calcTab("Winning Price")+calcTab("Total Bid"));
             displayStringList(bidderEndedBid);
         }
         else if(!bidder.successBidList.isEmpty() && bidderEndedBid.isEmpty()){
             System.out.println("The items below are suceess bid.");
-            System.out.println(calcTab("Item Name")+calcTab("Item Price")+calcTab("Item Description")+calcTab("Auction Start Time")+calcTab("Auction End Time")+calcTab("Auction Type")+calcTab("Auction Winner")+calcTab("Winning Price")+calcTab("Total Bid"));
+            //System.out.println(calcTab("Item Name")+calcTab("Item Price")+calcTab("Item Description")+calcTab("Auction Start Time")+calcTab("Auction End Time")+calcTab("Auction Type")+calcTab("Auction Winner")+calcTab("Winning Price")+calcTab("Total Bid"));
             displayStringList(bidder.successBidList);
         }
         else{
             System.out.println("The items' auction time has ended.");
-            System.out.println(calcTab("Item Name")+calcTab("Item Price")+calcTab("Item Description")+calcTab("Auction Start Time")+calcTab("Auction End Time")+calcTab("Auction Type")+calcTab("Auction Winner")+calcTab("Winning Price")+calcTab("Total Bid"));
+            //System.out.println(calcTab("Item Name")+calcTab("Item Price")+calcTab("Item Description")+calcTab("Auction Start Time")+calcTab("Auction End Time")+calcTab("Auction Type")+calcTab("Auction Winner")+calcTab("Winning Price")+calcTab("Total Bid"));
             displayStringList(bidderEndedBid);
             System.out.println("The items below are suceess bid.");
-            System.out.println(calcTab("Item Name")+calcTab("Item Price")+calcTab("Item Description")+calcTab("Auction Start Time")+calcTab("Auction End Time")+calcTab("Auction Type")+calcTab("Auction Winner")+calcTab("Winning Price")+calcTab("Total Bid"));
+            //System.out.println(calcTab("Item Name")+calcTab("Item Price")+calcTab("Item Description")+calcTab("Auction Start Time")+calcTab("Auction End Time")+calcTab("Auction Type")+calcTab("Auction Winner")+calcTab("Winning Price")+calcTab("Total Bid"));
             displayStringList(bidder.successBidList);
         }
     }
@@ -725,34 +739,67 @@ public class AuctionSystem {
         else{
             Date currentDate = new Date();
             System.out.println("Current Time: "+dateformat.format(currentDate));
-            System.out.println("All Auction: ");
-            System.out.println(calcTab("Item Name")+calcTab("Item Price")+calcTab("Item Description")+calcTab("Auction End Time")+calcTab("Auction Type")+calcTab("Current Highest Bid")+calcTab("Bidder"));
-            for(int i = 0; i<bidder.biddingList.size(); i++){
-                String itemName = bidder.biddingList.get(i);
-                Item item = itemList.getItem(itemList.indexOfItem(itemName)).getValue();
-                if(item.auctionType.AuctionType.equals("VickeryAuction") || item.auctionType.AuctionType.equals("BlindAuction")){
-                    System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab("Anonymous Price")+calcTab("Anonymous Bidder"));
-                }
-                else if (item.auctionType.bidStack.bidderList.size() == 0){
-                    System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType)+calcTab("No bid yet")+calcTab("No bidder yet"));
-                }else
-                    System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType)+calcTab(item.auctionType.getHighestBid()+"")+calcTab(item.auctionType.bidStack.bidderList.get(item.auctionType.bidStack.bidderList.size()-1).getName()));
-            }
+            displayStringList(bidder.biddingList);
         }
     }
     
     public void displayStringList(ArrayList<String> list){
+        Date currentDate = new Date();
+        System.out.println(calcTab("Item Name")+calcTab("Item Price")+calcTab("Item Description")+calcTab("Auction Start Time")+calcTab("Auction End Time")+calcTab("Auction Type")+calcTab("Highest Bid")+calcTab("Bidder")+calcTab("Total Bid"));
         for(int i = 0; i<list.size(); i++){
             String itemName = list.get(i);
             Item item = itemList.getItem(itemList.indexOfItem(itemName)).getValue();
-        if(item.auctionType.AuctionType.equals("VickeryAuction")){    
-            if(item.auctionType.bidStack.bidderList.size()<2)
-                 System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(item.auctionType.bidStack.peek().getValue().getName())+calcTab(((VickeryAuction)item.auctionType).getSecondHighestBid()+"")+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
-
-            else System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(item.auctionType.bidStack.bidderList.get(item.auctionType.bidStack.bidderList.size()-2).getName())+calcTab(((VickeryAuction)item.auctionType).getSecondHighestBid()+"")+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
-        }
-        else
-            System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType)+calcTab(item.auctionType.bidStack.peek().getValue().getName())+calcTab(item.auctionType.getHighestBid()+"")+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
+        if(currentDate.before(item.auctionType.endTime)){
+                if(!item.auctionType.bidStack.bidderList.isEmpty()){
+                    if(item.auctionType.AuctionType.equals("BlindAuction") || item.auctionType.AuctionType.equals("VickeryAuction")){
+                    System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab("Anonymous price")+calcTab("Anonymous bidder")+calcTab(item.auctionType.bidStack.bidderList.size()+""));
+                    }
+                    else
+                    System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(item.auctionType.getHighestBid()+"")+calcTab(item.auctionType.bidStack.peek().getValue().getName())+calcTab(item.auctionType.bidStack.bidderList.size()+""));
+                }
+                else
+                    System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab("No highest bid")+calcTab("No bidder")+calcTab(item.auctionType.bidStack.bidderList.size()+""));
+            }
+            else{
+                if(!item.auctionType.bidStack.bidderList.isEmpty()){
+                    if(item.auctionType.AuctionType.equals("VickeryAuction")){    
+                        if(item.auctionType.bidStack.bidderList.size()<2)
+                            System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(((VickeryAuction)item.auctionType).getSecondHighestBid()+"")+calcTab(item.auctionType.bidStack.peek().getValue().getName())+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
+                        else{
+                            if(((VickeryAuction)item.auctionType).checkTie()){
+                                //logic when there's tie
+                                int tiePosition = ((VickeryAuction)item.auctionType).tieWinnerPosition();
+                                System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(((VickeryAuction)item.auctionType).getSecondHighestBid()+"")+calcTab(item.auctionType.bidStack.bidderList.get(tiePosition).getName())+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
+                            }
+                            else{
+                                //logic when there's no tie
+                                int indexOfHighestPrice = item.auctionType.bidStack.bidPriceList.indexOf(item.auctionType.getHighestBid());
+                                System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(((VickeryAuction)item.auctionType).getSecondHighestBid()+"")+calcTab(item.auctionType.bidStack.bidderList.get(indexOfHighestPrice).getName())+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
+                            }
+                        }
+                    }
+                    if(item.auctionType.AuctionType.equals("BlindAuction")){    
+                        if(item.auctionType.bidStack.bidderList.size()<2)
+                            System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(((BlindAuction)item.auctionType).getHighestBid()+"")+calcTab(item.auctionType.bidStack.peek().getValue().getName())+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
+                        else{
+                            if(((BlindAuction)item.auctionType).checkTie()){
+                                //logic when there's tie
+                                int tiePosition = ((BlindAuction)item.auctionType).tieWinnerPosition();
+                                System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(((BlindAuction)item.auctionType).getHighestBid()+"")+calcTab(item.auctionType.bidStack.bidderList.get(tiePosition).getName())+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
+                            }
+                            else{
+                                //logic when there's no tie
+                                int indexOfHighestPrice = item.auctionType.bidStack.bidPriceList.indexOf(item.auctionType.getHighestBid());
+                                System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab(((BlindAuction)item.auctionType).getHighestBid()+"")+calcTab(item.auctionType.bidStack.bidderList.get(indexOfHighestPrice).getName())+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
+                            }
+                        }
+                    }
+                    else
+                        System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType)+calcTab(item.auctionType.getHighestBid()+"")+calcTab(item.auctionType.bidStack.peek().getValue().getName())+calcTab(item.auctionType.bidStack.bidTimeList.size()+""));
+                }
+                else
+                    System.out.println(calcTab(item.getName())+calcTab(item.getPrice()+"")+calcTab(item.getDescription())+calcTab(dateToString((item.auctionType).startTime.toString()))+calcTab(dateToString((item.auctionType).endTime.toString()))+calcTab(item.auctionType.AuctionType+"")+calcTab("No highest bid")+calcTab("No bidder")+calcTab(item.auctionType.bidStack.bidderList.size()+""));
+            }
         }
     }
     
@@ -832,34 +879,6 @@ public class AuctionSystem {
         }
     }
     
-    /*public static void checkAvailableAuction(){
-        Date current=new Date();
-        SimpleDateFormat simpleFormat =new SimpleDateFormat("dd-M-yyyy hh:mm:ss");            //date format can change according to whole system date format
-        System.out.println("Today's date : " + simpleFormat.format(current));
-        ArrayList availAuction=new ArrayList();
-        try{
-            String [] split=new String[30];
-            Scanner input=new Scanner(new FileInputStream("d:/AuctionSystem.txt"));   //just replace the correct text file
-            while(input.hasNextLine()){
-                String read=input.nextLine();
-                split=read.split(",");                                                //change the appropriate separate-character
-                
-                Date endTime=simpleFormat.parse(split[2]);                            //convert String into Date
-                
-                if(current.before(endTime))
-                    availAuction.add(split[0]);                                       // split[0] , I assume item name is in first place
-            }
-            System.out.println("Available Auction(s): "+availAuction.toString());     // this availAuction arraylist will only show available item to bid.
-            input.close();
-        }
-        catch(FileNotFoundException e){
-            e.getMessage();
-        }
-        catch(ParseException e){
-        }
-    }*/
-    
-    
     public void setBidderCall(Item item, Date biddingTime, Double biddingAmount, Bidder bider){
         //English Auction 
         if (item.auctionType.AuctionType.equals("EnglishAuction"))
@@ -892,131 +911,8 @@ public class AuctionSystem {
             System.out.println(" at " + dateToString(item.auctionType.bidStack.bidTimeList.get(i).toString()));
         }
     }
-    
-    public void sortDateAsc(){
-            int x = checkDatabaseLines();
-            String[]name = new String[x];
-            double[]price = new double[x];
-            String[]description = new String[x];
-            Date[]startTime = new Date[x];
-            Date[]endTime = new Date[x];
-            String[]auction = new String[x];
-            String[]copyFromText = new String[6];
-            int counter2 = 0;
-        try{
-            Scanner input = new Scanner(new FileInputStream("itemdatabase.txt"));
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-            while(input.hasNextLine()){
-                String copy = input.nextLine();
-                int counter1 = 0;
-                for(String rekt : copy.split(",")){
-                    copyFromText[counter1] = rekt;
-                    counter1++;
-                }
-                   name[counter2]=copyFromText[0];
-                   price[counter2]=Double.parseDouble(copyFromText[1]);
-                   description[counter2]=copyFromText[2];
-                   startTime[counter2]=formatter.parse(copyFromText[3]);
-                   endTime[counter2]=formatter.parse(copyFromText[4]);
-                   auction[counter2]=copyFromText[5];
-                   counter2++;
-                
-            }
-             for(int i=0;i<startTime.length-1;i++){
-                 for(int j=i+1;j<startTime.length;j++){
-                     if(startTime[i].after(startTime[j])){
-                         String hold = name[i];
-                         name[i] = name[j];
-                         name[j] = hold;
-                         double hold1 = price[i];
-                         price[i] = price[j];
-                         price[j] = hold1;
-                         String hold2 = description[i];
-                         description[i] = description[j];
-                         description[j] = hold2;
-                         Date hold3 = startTime[i];
-                         startTime[i] = startTime[j];
-                         startTime[j] = hold3;
-                         Date hold4 = endTime[i];
-                         endTime[i] = endTime[j];
-                         endTime[j] = hold4;
-                         String hold5 = auction[i];
-                         auction[i] = auction[j];
-                         auction[j] = hold5;
-                     }
-                 }
-             }
-            
-        }catch(FileNotFoundException e){
-            System.out.println("File was not found!");
-        }catch(ParseException f){
-            System.out.println("Error Parsing!");
-        }
-    }
-    
-     public void sortDateDsc(){
-            int x = checkDatabaseLines();
-            String[]name = new String[x];
-            double[]price = new double[x];
-            String[]description = new String[x];
-            Date[]startTime = new Date[x];
-            Date[]endTime = new Date[x];
-            String[]auction = new String[x];
-            String[]copyFromText = new String[6];
-            int counter2 = 0;
-        try{
-        
-            Scanner input = new Scanner(new FileInputStream("itemdatabase.txt"));
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-            while(input.hasNextLine()){
-                String copy = input.nextLine();
-                int counter1 = 0;
-                for(String rekt : copy.split(",")){
-                    copyFromText[counter1] = rekt;
-                    counter1++;
-                }
-                   name[counter2]=copyFromText[0];
-                   price[counter2]=Double.parseDouble(copyFromText[1]);
-                   description[counter2]=copyFromText[2];
-                   startTime[counter2]=formatter.parse(copyFromText[3]);
-                   endTime[counter2]=formatter.parse(copyFromText[4]);
-                   auction[counter2]=copyFromText[5];
-                   counter2++;
-                
-            }
-             for(int i=0;i<startTime.length-1;i++){
-                 for(int j=i+1;j<startTime.length;j++){
-                     if(startTime[i].before(startTime[j])){
-                         String hold = name[i];
-                         name[i] = name[j];
-                         name[j] = hold;
-                         double hold1 = price[i];
-                         price[i] = price[j];
-                         price[j] = hold1;
-                         String hold2 = description[i];
-                         description[i] = description[j];
-                         description[j] = hold2;
-                         Date hold3 = startTime[i];
-                         startTime[i] = startTime[j];
-                         startTime[j] = hold3;
-                         Date hold4 = endTime[i];
-                         endTime[i] = endTime[j];
-                         endTime[j] = hold4;
-                         String hold5 = auction[i];
-                         auction[i] = auction[j];
-                         auction[j] = hold5;
-                     }
-                 }
-             }
-            
-        }catch(FileNotFoundException e){
-            System.out.println("File was not found!");
-        }catch(ParseException f){
-            System.out.println("Error Parsing!");
-        }
-    }
-     
-     public String bidderStatus(Bidder bidder){
+         
+    public String bidderStatus(Bidder bidder){
         int freq = bidder.getBidFrequency();
         String status;
             
@@ -1417,4 +1313,18 @@ public class AuctionSystem {
         }
         return continueMode;
     }
+    
+   /* public void sortBiddingFrequencyAsc(ArrayList<Item> list){
+        for(int i = 1; i<list.size(); i++){
+            for(int j = 0; j<list.size()-1; j++){
+                if(list.get(j).auctionType.bidStack.bidderList.size()>list.get(j+1).auctionType.bidStack.bidderList.size()){
+                    Item hold = list.get(j);
+                    Item hold2 = list.get(j+1);
+                    list.set(j, hold2);
+                    list.set(j+1, hold);
+                }
+            }
+        }
+        displayItemList(list);
+    }*/
 }
